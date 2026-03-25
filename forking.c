@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 16:58:38 by bastalze          #+#    #+#             */
-/*   Updated: 2026/03/25 18:01:34 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/03/25 18:38:08 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.c"
@@ -32,7 +32,7 @@ void	ft_pipenfork(t_data *pipex)
 
 void	ft_open_files(t_data *pipex)
 {
-	pipex->infile_id = open(pipex->infile, O_EXEC);
+	pipex->infile_id = open(pipex->infile, O_RDONLY);
 	if (pipex->infile_id == -1)
 		ft_error("Open infile (first argument) failed", pipex);
 	pipex->outfile_id = open(pipex->outfile, O_CREAT | O_WRONLY, 0755);

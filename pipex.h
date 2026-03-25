@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 15:35:19 by bastalze          #+#    #+#             */
-/*   Updated: 2026/03/25 18:28:58 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/03/25 19:06:00 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PIPEX_H
@@ -24,7 +24,9 @@ typedef struct	s_data
 	char	*infile;
 	int		infile_fd
 	char	*cmd1;
+	char	*ex_cmd1;
 	char	*cmd2;
+	char	*ex_cmd2;
 	char	*outfile;
 	int		outfile_id;
 	int		pipefd[2];
@@ -39,5 +41,7 @@ void	ft_end_program(t_data *pipex);
 void	ft_parsing(int argc, char **argv, t_data *pipex);
 void	ft_open_files(t_data *pipex);
 void	ft_pipenfork(t_data *pipex);
+void	ft_firstborn(t_data *pipex);
+void	ft_secondborn(t_data *pipex);
 
 #endif

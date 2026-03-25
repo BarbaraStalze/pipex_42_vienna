@@ -9,6 +9,7 @@ SOURCES = pipex.c \
 		error.c \
 		parsing.c \
 		froking.c \
+		children.c \
 		
 OBJFILES = $(SOURCES:.c=.o)
 
