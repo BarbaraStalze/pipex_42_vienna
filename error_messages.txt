@@ -1,0 +1,6 @@
+# Errormessages
+
+infile does not exist:
+zsh: no such file or directory: infile
+
+
