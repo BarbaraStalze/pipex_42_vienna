@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 15:35:19 by bastalze          #+#    #+#             */
-/*   Updated: 2026/03/27 19:29:13 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/03/31 15:23:39 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PIPEX_H
@@ -24,16 +24,22 @@ typedef struct	s_data
 {
 	char	*infile;
 	int		infile_fd;
+	int		infile_fd_open;	
 	char	*cmd1;
 	char	*ex_cmd1;
 	char	*cmd2;
 	char	*ex_cmd2;
 	char	*outfile;
 	int		outfile_fd;
+	int		outfile_fd_open;
 	int		pipe_fd[2];
+	int		pipe_fd0_open;
+	int		pipe_fd1_open;
 	pid_t	pid[2];
 	char	**paths;
 	int		error;
+	int		stat1;
+	int		stat2;
 }	t_data;
 
 void    ft_free_array(char **a);
@@ -41,9 +47,9 @@ void	ft_pathfinder(char **env, t_data *pipex);
 void	ft_error(char *message, t_data *pipex);
 void	ft_end_program(t_data *pipex);
 void	ft_parsing(int argc, char **argv, t_data *pipex);
-void	ft_pipenfork(t_data *pipex, char *env);
-void	ft_firstborn(t_data *pipex);
-void	ft_secondborn(t_data *pipex);
+void	ft_pipenfork(t_data *pipex, char **env);
+void	ft_firstborn(t_data *pipex, char **env);
+void	ft_secondborn(t_data *pipex, char **env);
 void	ft_parent(t_data *pipex);
 
 #endif

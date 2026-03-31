@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 12:48:39 by bastalze          #+#    #+#             */
-/*   Updated: 2026/03/25 16:20:26 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/03/31 17:27:55 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -95,8 +95,6 @@ void	ft_pathfinder(char **env, t_data *pipex)
 		{
 			path_exists = 1;
 			pipex->paths = ft_split(env[i] + 5, ':');
-			if (!pipex->paths || !pipex->paths[0])
-				ft_error("Paths couldn't be malloced or no paths", pipex);
 			ft_checking_paths(env[i], pipex);
 		}
 		i++;

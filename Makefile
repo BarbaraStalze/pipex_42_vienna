@@ -8,7 +8,7 @@ SOURCES = pipex.c \
 		pathfinder.c \
 		error.c \
 		parsing.c \
-		froking.c \
+		forking.c \
 		children.c \
 		
 OBJFILES = $(SOURCES:.c=.o)
@@ -16,7 +16,7 @@ OBJFILES = $(SOURCES:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJFILES)
-	@make -C libft bonus
+	@make -C libft
 	$(CC) $(CFLAGS) $(OBJFILES) libft/libft.a -o $(NAME)
 
 %.o : %.c

@@ -14,6 +14,6 @@
 - [Wait System Call in C - geeksforgeeks](https://www.geeksforgeeks.org/c/wait-system-call-c/)
 
 ### Peers
-Kian gave me an entire crashcourse on the project - an hour of going through every step and possible pitfalls - thank you so much. Stefan A. answered my questions regarding the implementation order of functions and error handling.
+Kian gave me an entire crashcourse on the project - an hour of going through every step and possible pitfalls - thank you so much. Stefan A. answered my questions regarding the implementation order of functions and error handling. I collected infos from Irene, Michal and Felix on what is actually important to handle and what is overkill.
 
 ### AI Usage Statement
