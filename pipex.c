@@ -13,8 +13,9 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	static t_data	pipex;
+	t_data	pipex;
 
+ 	ft_initialize_struct(&pipex);
 	ft_parsing(argc, argv, &pipex);
 	ft_pathfinder(env, &pipex);
 	

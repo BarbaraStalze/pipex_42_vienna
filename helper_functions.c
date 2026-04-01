@@ -23,3 +23,27 @@ void	ft_free_array(char **a)
 	}
 	free(a);
 }
+
+void	ft_initialize_struct(t_data *pipex)
+{
+	pipex->infile = NULL;
+	pipex->infile_fd = -1;
+	pipex->infile_fd_open = 0;
+	pipex->cmd1 = NULL;
+	pipex->cmd_path1 = NULL;
+	pipex->cmd2 = NULL;
+	pipex->cmd_path2 = NULL;
+	pipex->outfile = NULL;
+	pipex->outfile_fd = -1;
+	pipex->outfile_fd_open = 0;
+	pipex->pipe_fd[0] = 0;
+	pipex->pipe_fd[1] = 0;
+	pipex->pipe_fd0_open = 0;
+	pipex->pipe_fd1_open = 0;
+	pipex->pid[0] = 0;
+	pipex->pid[1] = 0;
+	pipex->paths = NULL;
+	pipex->error = 0;
+	pipex->stat1 = 0;
+	pipex->stat2 = 0;
+}

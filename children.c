@@ -11,13 +11,33 @@
 /* ************************************************************************** */
 #include "pipex.h"
 
-static char	*ft_is_command_executable(t_data *pipex, char *command)
+static void	ft_remove_path_from_command(char *command, char **pure_command)
+{
+	int		len;
+	int		i;
+	char	**command_path;
+	
+	command_path = ft_split(command, '/');
+	i = 0;
+	while (command_path[i])
+		i++;
+	free(*pure_command);
+	len = ft_strlen(command_path[i - 1]);
+	*pure_command = malloc(len * sizeof(char));
+	ft_strlcpy(*pure_command, command_path[i - 1], len);
+	free(command_path);
+}
+
+static char	*ft_is_command_executable(t_data *pipex, char *command, char **pure_command)
 {
 	int		i;
 	char	*executable;
 
 	if (access(command, X_OK) == 0)
+	{
+		ft_remove_path_from_command(command, pure_command);
 		return (command);
+	}
 	i = 0;
 	else
 	{
@@ -52,7 +72,7 @@ void	ft_firstborn(t_data *pipex, char **env)
 	command_array = ft_split(pipex->cmd1, ' ');
 	if (!command_array)
 		ft_error("Split in firstborn has failed", pipex);
-	pipex->ex_cmd1 = ft_is_command_executable(pipex, command_array[0]);
+	pipex->cmd_path1 = ft_is_command_executable(pipex, command_array[0], &command_array[0]);
 	check = dup2(pipex->infile_fd, 0);
 	if (check == -1)
 		ft_error("dup2 failed in firstborn", pipex);
@@ -65,7 +85,8 @@ void	ft_firstborn(t_data *pipex, char **env)
 	pipex->pipe_fd[1] = -1;
 	close(pipex->pipe_fd[0]);
 	pipex->pipe_fd[0] = -1;
-	execve(pipex->ex_cmd1, command_array, env);
+	execve(pipex->cmd_path1, command_array, env);
+	free(command_array);
 	ft_error("execve failed in firstborn", pipex);
 }
 
@@ -88,7 +109,7 @@ void	ft_secondborn(t_data *pipex, char **env)
 	command_array = ft_split(pipex->cmd2, ' ');
 	if (!command_array)
 		ft_error("Split in secondborn has failed", pipex);
-	pipex->ex_cmd2 = ft_is_command_executable(pipex, command_array[0]);
+	pipex->cmd_path2 = ft_is_command_executable(pipex, command_array[0], &command_array[0]);
 	check = dup2(pipex->pipe_fd[0], 0);
 	if (check == -1)
 		ft_error("dup2 failed in secondborn", pipex);
@@ -101,6 +122,7 @@ void	ft_secondborn(t_data *pipex, char **env)
 		ft_error("dup2 failed in secondborn", pipex);
 	close(pipex->outfile_fd);
 	pipex->outfile_fd = -1;
-	execve(pipex->ex_cmd2, command_array, env);
+	execve(pipex->cmd_path2, command_array, env);
+	free(command_array);
 	ft_error("execve failed in secondborn", pipex);
 }

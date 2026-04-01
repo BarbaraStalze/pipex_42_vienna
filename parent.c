@@ -19,13 +19,17 @@ void	ft_parent(t_data *pipex)
 	close(pipex->pipe_fd[0]);
 	pipex->pipe_fd0_open = 0;
 	close(pipex->pipe_fd[1]);
-	pipex->pipe_fd1_open = 1;
+	pipex->pipe_fd1_open = 0;
 	pid_check1 = waitpid(pipex->pid[0], &pipex->stat1, 0);
+	if (pid_check1 == -1)
+		ft_error("Wait for firstborn failed", pipex);
 	pid_check2 = waitpid(pipex->pid[1], &pipex->stat2, 0);
+	if (pid_check2 == -1)
+		ft_error("Wait for secondborn failed", pipex);
 	if (WIFEXITED(pipex->stat1) && WIFEXITED(pipex->stat2))
 		ft_end_program(pipex);
 	else
-		ft_error("One of the children couldn't finish their job", pipex);
+		ft_error("One of the children or both couldn't finish their job", pipex);
 }
 
 void	ft_pipenfork(t_data *pipex, char **env)

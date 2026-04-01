@@ -26,9 +26,9 @@ typedef struct	s_data
 	int		infile_fd;
 	int		infile_fd_open;	
 	char	*cmd1;
-	char	*ex_cmd1;
+	char	*cmd_path1;
 	char	*cmd2;
-	char	*ex_cmd2;
+	char	*cmd_path2;
 	char	*outfile;
 	int		outfile_fd;
 	int		outfile_fd_open;
@@ -51,5 +51,6 @@ void	ft_pipenfork(t_data *pipex, char **env);
 void	ft_firstborn(t_data *pipex, char **env);
 void	ft_secondborn(t_data *pipex, char **env);
 void	ft_parent(t_data *pipex);
+void	ft_initialize_struct(t_data *pipex);
 
 #endif

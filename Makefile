@@ -8,7 +8,7 @@ SOURCES = pipex.c \
 		pathfinder.c \
 		error.c \
 		parsing.c \
-		forking.c \
+		parent.c \
 		children.c \
 		
 OBJFILES = $(SOURCES:.c=.o)
