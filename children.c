@@ -38,9 +38,9 @@ static char	*ft_is_command_executable(t_data *pipex, char *command, char **pure_
 		ft_remove_path_from_command(command, pure_command);
 		return (command);
 	}
-	i = 0;
 	else
 	{
+		i = 0;
 		while (pipex->paths[i])
 		{
 			executable = ft_strjoin(pipex->paths[i], command);
@@ -50,8 +50,46 @@ static char	*ft_is_command_executable(t_data *pipex, char *command, char **pure_
 			i++;
 		}
 	}
-	ft_error("Command file not found or not executable", pipex);
+	ft_error("Command file not found or not executable", pipex, 0);
 	return (0);
+}
+
+void	ft_open_file(t_data *pipex)
+{
+	if (pipex->child_nbr == 1)
+		pipex->file_fd = open(pipex->infile, O_RDONLY);
+	else
+		pipex->file_fd = open(pipex->outfile, O_CREAT | O_WRONLY, 0755);
+	if (pipex->file_fd == -1 && pipex->child_nbr == 1)
+		ft_error("Open infile (first argument) failed", pipex, 1);
+	else if (pipex->file_fd == -1 && pipex->child_nbr == 2)
+		ft_error("Open outfile (last argument) failed", pipex, 1);
+	pipex->file_fd_open = 1;
+}
+
+void	ft_check_access_firstborn(t_data *pipex)
+{
+	int	check;
+
+	check = access(pipex->infile, F_OK);
+	if (check == -1)
+		ft_error("Infile does not exist", pipex, 0);
+	check = access(pipex->infile, R_OK);
+	if (check == -1)
+		ft_error("Infile does not have permission to read", pipex, 0);
+}
+
+void	ft_check_access_secondborn(t_data *pipex)
+{
+	int	check;
+
+	check = access(pipex->outfile, F_OK);
+	if (check == 0)
+	{
+		check = access(pipex->outfile, W_OK);
+		if (check == -1)
+			ft_error("Outfile does not have permission to write", pipex, 0);
+	}
 }
 
 void	ft_firstborn(t_data *pipex, char **env)
@@ -59,35 +97,28 @@ void	ft_firstborn(t_data *pipex, char **env)
 	int		check;
 	char	**command_array;
 
-	check = access(pipex->infile, F_OK);
-	if (check == -1)
-		ft_error("Infile does not exist", pipex);
-	check = access(pipex->infile, R_OK);
-	if (check == -1)
-		ft_error("Infile does not have permission to read", pipex);
-	pipex->infile_fd = open(pipex->infile, O_RDONLY);
-	if (pipex->infile_fd == -1)
-		ft_error("Open infile (first argument) failed", pipex);
-	pipex->infile_fd_open = 1;
+	pipex->child_nbr = 1;
+	ft_check_access_firstborn(pipex);
+	ft_open_file(pipex);
 	command_array = ft_split(pipex->cmd1, ' ');
 	if (!command_array)
-		ft_error("Split in firstborn has failed", pipex);
+		ft_error("Split in firstborn has failed", pipex, 1);
 	pipex->cmd_path1 = ft_is_command_executable(pipex, command_array[0], &command_array[0]);
-	check = dup2(pipex->infile_fd, 0);
+	check = dup2(pipex->file_fd, 0);
 	if (check == -1)
-		ft_error("dup2 failed in firstborn", pipex);
-	close(pipex->infile_fd);
-	pipex->infile_fd = -1;
+		ft_error("dup2 failed in firstborn", pipex, 1);
+	close(pipex->file_fd);
+	pipex->file_fd = -1;
 	check = dup2(pipex->pipe_fd[1], 1);
 	if (check == -1)
-		ft_error("dup2 failed in firstborn", pipex);
+		ft_error("dup2 failed in firstborn", pipex, 1);
 	close(pipex->pipe_fd[1]);
 	pipex->pipe_fd[1] = -1;
 	close(pipex->pipe_fd[0]);
 	pipex->pipe_fd[0] = -1;
 	execve(pipex->cmd_path1, command_array, env);
 	free(command_array);
-	ft_error("execve failed in firstborn", pipex);
+	ft_error("execve failed in firstborn", pipex, 1);
 }
 
 void	ft_secondborn(t_data *pipex, char **env)
@@ -95,34 +126,26 @@ void	ft_secondborn(t_data *pipex, char **env)
 	int		check;
 	char	**command_array;
 
-	check = access(pipex->outfile, F_OK);
-	if (check == 0)
-	{
-		check = access(pipex->infile, W_OK);
-		if (check == -1)
-			ft_error("Outfile does not have permission to write", pipex);
-	}
-	pipex->outfile_fd = open(pipex->outfile, O_CREAT | O_WRONLY, 0755);
-	if (pipex->outfile_fd == -1)
-		ft_error("Open outfile (last argument) failed", pipex);
-	pipex->outfile_fd_open = 1;
+	pipex->child_nbr = 2;
+	ft_check_access_secondborn(pipex);
+	ft_open_file(pipex);
 	command_array = ft_split(pipex->cmd2, ' ');
 	if (!command_array)
-		ft_error("Split in secondborn has failed", pipex);
+		ft_error("Split in secondborn has failed", pipex, 1);
 	pipex->cmd_path2 = ft_is_command_executable(pipex, command_array[0], &command_array[0]);
 	check = dup2(pipex->pipe_fd[0], 0);
 	if (check == -1)
-		ft_error("dup2 failed in secondborn", pipex);
+		ft_error("dup2 failed in secondborn", pipex, 1);
 	close(pipex->pipe_fd[0]);
 	pipex->pipe_fd[0] = -1;
 	close(pipex->pipe_fd[1]);
 	pipex->pipe_fd[1] = -1;
-	check = dup2(pipex->outfile_fd, 1);
+	check = dup2(pipex->file_fd, 1);
 	if (check == -1)
-		ft_error("dup2 failed in secondborn", pipex);
-	close(pipex->outfile_fd);
-	pipex->outfile_fd = -1;
+		ft_error("dup2 failed in secondborn", pipex, 1);
+	close(pipex->file_fd);
+	pipex->file_fd = -1;
 	execve(pipex->cmd_path2, command_array, env);
 	free(command_array);
-	ft_error("execve failed in secondborn", pipex);
+	ft_error("execve failed in secondborn", pipex, 1);
 }

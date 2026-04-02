@@ -23,30 +23,28 @@
 typedef struct	s_data
 {
 	char	*infile;
-	int		infile_fd;
-	int		infile_fd_open;	
+	int		file_fd;
+	int		file_fd_open;	
 	char	*cmd1;
 	char	*cmd_path1;
 	char	*cmd2;
 	char	*cmd_path2;
 	char	*outfile;
-	int		outfile_fd;
-	int		outfile_fd_open;
 	int		pipe_fd[2];
 	int		pipe_fd0_open;
 	int		pipe_fd1_open;
 	pid_t	pid[2];
 	char	**paths;
 	int		error;
+	int		child_nbr;
 	int		stat1;
 	int		stat2;
 }	t_data;
 
 void    ft_free_array(char **a);
 void	ft_pathfinder(char **env, t_data *pipex);
-void	ft_error(char *message, t_data *pipex);
+void	ft_error(char *message, t_data *pipex, int error_type);
 void	ft_end_program(t_data *pipex);
-void	ft_parsing(int argc, char **argv, t_data *pipex);
 void	ft_pipenfork(t_data *pipex, char **env);
 void	ft_firstborn(t_data *pipex, char **env);
 void	ft_secondborn(t_data *pipex, char **env);

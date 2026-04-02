@@ -7,7 +7,6 @@ SOURCES = pipex.c \
 		helper_functions.c \
 		pathfinder.c \
 		error.c \
-		parsing.c \
 		parent.c \
 		children.c \
 		

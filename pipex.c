@@ -11,6 +11,16 @@
 /* ************************************************************************** */
 #include "pipex.h"
 
+static void    ft_parsing(int argc, char **argv, t_data *pipex)
+{
+	if (argc != 5)
+		ft_error("The program only takes 4 arguments", pipex, 0);
+	pipex->infile = argv[1];
+	pipex->cmd1 = argv[2];
+	pipex->cmd2 = argv[3];
+	pipex->outfile = argv[4];
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_data	pipex;
@@ -18,17 +28,18 @@ int	main(int argc, char **argv, char **env)
  	ft_initialize_struct(&pipex);
 	ft_parsing(argc, argv, &pipex);
 	ft_pathfinder(env, &pipex);
-	
-// TEST TEST TEST
-	int i = 0;
-
-	while (pipex.paths[i])
-	{
-		printf("%s\n", pipex.paths[i]);
-		i++;
-	}
-
 	ft_pipenfork(&pipex, env);
 	ft_parent(&pipex);
 	ft_end_program(&pipex);
 }
+
+/*
+// TEST TEST TEST
+        int i = 0;
+
+        while (pipex.paths[i])
+        {
+                printf("%s\n", pipex.paths[i]);
+                i++;
+        }
+*/

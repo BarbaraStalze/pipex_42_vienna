@@ -22,14 +22,14 @@ void	ft_parent(t_data *pipex)
 	pipex->pipe_fd1_open = 0;
 	pid_check1 = waitpid(pipex->pid[0], &pipex->stat1, 0);
 	if (pid_check1 == -1)
-		ft_error("Wait for firstborn failed", pipex);
+		ft_error("Wait for firstborn failed", pipex, 1);
 	pid_check2 = waitpid(pipex->pid[1], &pipex->stat2, 0);
 	if (pid_check2 == -1)
-		ft_error("Wait for secondborn failed", pipex);
+		ft_error("Wait for secondborn failed", pipex, 1);
 	if (WIFEXITED(pipex->stat1) && WIFEXITED(pipex->stat2))
 		ft_end_program(pipex);
 	else
-		ft_error("One of the children or both couldn't finish their job", pipex);
+		ft_error("One of the children or both couldn't finish their job", pipex, 1);
 }
 
 void	ft_pipenfork(t_data *pipex, char **env)
@@ -38,7 +38,7 @@ void	ft_pipenfork(t_data *pipex, char **env)
 
 	pipe_status = pipe(pipex->pipe_fd);
 	if (pipe_status == -1)
-		ft_error("Pipe failed", pipex);
+		ft_error("Pipe failed", pipex, 1);
 	pipex->pipe_fd0_open = 1;
 	pipex->pipe_fd1_open = 1;
 	pipex->pid[0] = fork();
@@ -48,5 +48,5 @@ void	ft_pipenfork(t_data *pipex, char **env)
 	if (pipex->pid[1] == 0)
 		ft_secondborn(pipex, env);
 	if (pipex->pid[0] == -1 || pipex->pid[1] == -1)
-		ft_error("Fork failed", pipex);
+		ft_error("Fork failed", pipex, 1);
 }
