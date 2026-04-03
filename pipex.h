@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 15:35:19 by bastalze          #+#    #+#             */
-/*   Updated: 2026/03/31 15:23:39 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/03 18:22:06 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PIPEX_H
@@ -37,8 +37,8 @@ typedef struct	s_data
 	char	**paths;
 	int		error;
 	int		child_nbr;
-	int		stat1;
-	int		stat2;
+	int		stat;
+	int		exit_stat;
 }	t_data;
 
 void    ft_free_array(char **a);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   forking.c                                          :+:      :+:    :+:   */
+/*   parent.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 16:58:38 by bastalze          #+#    #+#             */
-/*   Updated: 2026/03/31 15:19:15 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/03 14:26:50 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -20,16 +20,15 @@ void	ft_parent(t_data *pipex)
 	pipex->pipe_fd0_open = 0;
 	close(pipex->pipe_fd[1]);
 	pipex->pipe_fd1_open = 0;
-	pid_check1 = waitpid(pipex->pid[0], &pipex->stat1, 0);
+	pid_check1 = waitpid(pipex->pid[0], &pipex->stat, 0);
 	if (pid_check1 == -1)
 		ft_error("Wait for firstborn failed", pipex, 1);
-	pid_check2 = waitpid(pipex->pid[1], &pipex->stat2, 0);
+	pid_check2 = waitpid(pipex->pid[1], &pipex->stat, 0);
 	if (pid_check2 == -1)
 		ft_error("Wait for secondborn failed", pipex, 1);
-	if (WIFEXITED(pipex->stat1) && WIFEXITED(pipex->stat2))
+	if (WIFEXITED(pipex->stat))
 		ft_end_program(pipex);
-	else
-		ft_error("One of the children or both couldn't finish their job", pipex, 1);
+	ft_error("Second child couldn't finish its job", pipex, 0);
 }
 
 void	ft_pipenfork(t_data *pipex, char **env)
