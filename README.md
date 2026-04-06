@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by bastalze.*
+*This project has been created as partC of the 42 curriculum by bastalze.*
 
 # pipex
 
@@ -8,17 +8,17 @@ Pipex replicates the behavior of shell pipelines. The program takes four argumen
 ## Instruction
 
 ### Compilation
-- ´make´ or 'make all' compiles the program
-- 'make clean' removes object files
-- 'make fclean' also removes the executable, library archive and depencency file (.d)
-- 'make re' — recompiles the entire project from scratch
+- `make` or `make all` compiles the program
+- `make clean` removes object files
+- `make fclean` also removes the executable, library archive and depencency file (.d)
+- `make re` recompiles the entire project from scratch
 
 ### Run program
 To run the program you must have an existing infile and write the following line in the terminal. Where cmd1 is the first command and cmd2 is the second one and infile is the name of the infile and outfile is either the name of an existing outfile which will be overwritten or the name that you want the outfile to have.
 
 	./pipex infile cmd1 cmd2 outfile
 The equivalent shell expression:
-'< infile grep must | wc -w > outfile'
+`< infile grep must | wc -w > outfile`
 Flags or additions that belong to a command need to be written in the same argument. For example:
 
 	./pipex infile "grep must" "wc -w" outfile
