@@ -2,7 +2,7 @@
 
 NAME = pipex
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 SOURCES = pipex.c \
 		helper_functions.c \
 		pathfinder.c \
@@ -17,7 +17,7 @@ OBJFILES = $(SOURCES:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJFILES)
-	@make -C libft
+	make -C libft
 	$(CC) $(CFLAGS) $(OBJFILES) libft/libft.a -o $(NAME)
 
 %.o : %.c
@@ -25,12 +25,12 @@ $(NAME) : $(OBJFILES)
 
 clean:
 	rm -f $(OBJFILES)
-	@make -C libft clean
+	make -C libft clean
 
 fclean:clean
 	rm -f $(NAME)
-	@make -C libft fclean
+	make -C libft fclean
 
 re:fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re debug
