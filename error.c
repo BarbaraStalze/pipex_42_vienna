@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 18:28:47 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/06 13:06:45 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/06 19:11:45 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -16,7 +16,6 @@ void	ft_error_message(char *message, t_data *pipex, int error_type)
 	int		len;
 	char	*error_message;
 
-	printf("ERoor message bro\n");
 	error_message = ft_strjoin("Error\n", message);
 	if (!error_message)
 	{
@@ -46,11 +45,7 @@ void	ft_end_program(t_data *pipex)
 	if (pipex->exit_stat)
 		exit(pipex->exit_stat);
 	if (WIFEXITED(pipex->stat))
-	{
-		printf("Hello with exit\n");
-		printf("%d\n", WEXITSTATUS(pipex->stat));
 		exit(WEXITSTATUS(pipex->stat));
-	}
 	if (pipex->error == 1)
 		exit(1);
 	exit(0);
@@ -59,7 +54,6 @@ void	ft_end_program(t_data *pipex)
 void	ft_error(char *message, t_data *pipex, int error_type)
 {
 	pipex->error = 1;
-	printf("In Error bro\n");
 	ft_error_message(message, pipex, error_type);
 	ft_end_program(pipex);
 }

@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 12:46:11 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/06 13:32:39 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/06 18:50:09 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -15,18 +15,12 @@ static void	ft_check_access_secondborn(t_data *pipex)
 {
 	int	check;
 
-	printf("%s\n", pipex->outfile);
 	check = access(pipex->outfile, F_OK);
-	printf("%d\n", check);
 	if (check == 0)
 	{
 		check = access(pipex->outfile, W_OK);
-		printf("%d\n", check);
 		if (check == -1)
-		{
-			printf("yes check %d\n", check);
 			ft_error("Outfile does not have permission to write", pipex, 0);
-		}
 	}
 }
 
