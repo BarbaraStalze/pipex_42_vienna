@@ -6,12 +6,10 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:24:20 by bastalze          #+#    #+#             */
-/*   Updated: 2026/03/24 18:53:51 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/06 13:44:44 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
-
-#define SEMICOLON ;
 
 static void	ft_format_specifier(const char *text, int *count, va_list arg)
 {
@@ -33,7 +31,7 @@ static void	ft_format_specifier(const char *text, int *count, va_list arg)
 		(*count)++;
 	}
 	else
-		*count = -1 SEMICOLON
+		*count = -1;
 }
 
 static void	ft_print_text(const char *text, int *count, va_list arg)

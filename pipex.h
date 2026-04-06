@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 15:35:19 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/03 18:22:06 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/06 13:08:30 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PIPEX_H
@@ -20,7 +20,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 
-typedef struct	s_data
+typedef struct s_data
 {
 	char	*infile;
 	int		file_fd;
@@ -41,7 +41,7 @@ typedef struct	s_data
 	int		exit_stat;
 }	t_data;
 
-void    ft_free_array(char **a);
+void	ft_free_array(char **a);
 void	ft_pathfinder(char **env, t_data *pipex);
 void	ft_error(char *message, t_data *pipex, int error_type);
 void	ft_end_program(t_data *pipex);
@@ -50,5 +50,9 @@ void	ft_firstborn(t_data *pipex, char **env);
 void	ft_secondborn(t_data *pipex, char **env);
 void	ft_parent(t_data *pipex);
 void	ft_initialize_struct(t_data *pipex);
+void	ft_open_file(t_data *pipex);
+char	*ft_is_command_executable(t_data *pipex, char **command_array,
+			char *command, char **pure_command);
+void	ft_remove_path_from_command(char *command, char **pure_command);
 
 #endif

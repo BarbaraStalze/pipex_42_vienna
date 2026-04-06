@@ -6,14 +6,14 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 18:28:47 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/03 18:38:42 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/06 13:06:45 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
 
 void	ft_error_message(char *message, t_data *pipex, int error_type)
 {
-	int	len;
+	int		len;
 	char	*error_message;
 
 	printf("ERoor message bro\n");
