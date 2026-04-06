@@ -8,7 +8,7 @@ Pipex replicates the behavior of shell pipelines. The program takes four argumen
 ## Instruction
 
 ### Compilation
-- 'make' or 'make all' compiles the program
+- ´make´ or 'make all' compiles the program
 - 'make clean' removes object files
 - 'make fclean' also removes the executable, library archive and depencency file (.d)
 - 'make re' — recompiles the entire project from scratch
