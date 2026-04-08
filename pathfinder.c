@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 12:48:39 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/06 13:06:13 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/08 15:51:00 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -62,20 +62,21 @@ static void	ft_checking_paths(char *pathline, t_data *pipex)
 	i = 0;
 	while (pipex->paths[i])
 		i++;
-	if (ft_strnstr(pathline, "::", 100) != 0 || ft_strnstr(pathline, "/./", 100)
-		!= 0 || pathline[0] == ':' || pathline[ft_strlen(pathline) - 1] == ':')
+	if (ft_strnstr(pathline, "::", ft_strlen(pathline)) != 0
+		|| pathline[0] == ':' || pathline[ft_strlen(pathline) - 1] == ':')
 		i++;
 	copy_paths = malloc((i + 1) * sizeof(char *));
 	if (!copy_paths)
 		ft_error("Malloc in pathfinder failed", pipex, 1);
 	ft_slash_or_no_slash(copy_paths, pipex);
-	copy_paths[i] = NULL;
-	if (ft_strnstr(pathline, "::", 100) != 0 || ft_strnstr(pathline, "/./", 100)
-		!= 0 || pathline[0] == ':' || pathline[ft_strlen(pathline) - 1] == ':')
+	copy_paths[i--] = NULL;
+	if (ft_strnstr(pathline, "::", ft_strlen(pathline)) != 0
+		|| pathline[0] == ':' || pathline[ft_strlen(pathline) - 1] == ':')
 	{
-		copy_paths[i] = malloc(2 * sizeof(char));
-		copy_paths[i][0] = '/';
-		copy_paths[i][1] = 0;
+		copy_paths[i] = malloc(3 * sizeof(char));
+		copy_paths[i][0] = '.';
+		copy_paths[i][1] = '/';
+		copy_paths[i][2] = 0;
 		copy_paths[i + 1] = NULL;
 	}
 	ft_free_array(pipex->paths);

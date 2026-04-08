@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 12:43:08 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/06 13:42:55 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/08 15:42:25 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -21,10 +21,8 @@ void	ft_remove_path_from_command(char *command, char **pure_command)
 	i = 0;
 	while (command_path[i])
 		i++;
-	free(*pure_command);
 	len = ft_strlen(command_path[i - 1]);
-	*pure_command = malloc(len * sizeof(char));
-	ft_strlcpy(*pure_command, command_path[i - 1], len);
+	*pure_command = ft_strdup(command_path[i - 1]);
 	free(command_path);
 }
 
@@ -46,7 +44,7 @@ static char	*ft_is_command_executable_2(t_data *pipex, char **command_array,
 			{
 				ft_free_array(command_array);
 				pipex->exit_stat = 126;
-				ft_error("Command file no execute permission", pipex, 0);
+				ft_error("Command file has no execute permission", pipex, 0);
 			}
 		}
 		free(executable);
@@ -60,7 +58,7 @@ char	*ft_is_command_executable(t_data *pipex, char **command_array,
 {
 	char	*executable;
 
-	if (access(command, X_OK) == 0)
+	if (access(command, F_OK) == 0 && access(command, X_OK) == 0)
 	{
 		ft_remove_path_from_command(command, pure_command);
 		return (command);
@@ -89,4 +87,17 @@ void	ft_open_file(t_data *pipex)
 	else if (pipex->file_fd == -1 && pipex->child_nbr == 2)
 		ft_error("Open outfile (last argument) failed", pipex, 1);
 	pipex->file_fd_open = 1;
+}
+
+void	ft_close_unused_fds(t_data *pipex)
+{
+	close(pipex->pipe_fd[0]);
+	pipex->pipe_fd[0] = -1;
+	pipex->pipe_fd0_open = 0;
+	close(pipex->pipe_fd[1]);
+	pipex->pipe_fd[1] = -1;
+	pipex->pipe_fd1_open = 0;
+	close(pipex->file_fd);
+	pipex->file_fd = -1;
+	pipex->file_fd_open = 0;
 }

@@ -2,7 +2,7 @@
 
 NAME = pipex
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 SOURCES = pipex.c \
 		helper_functions.c \
 		pathfinder.c \

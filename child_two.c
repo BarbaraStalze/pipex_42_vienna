@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 12:46:11 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/06 18:50:09 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/08 15:29:15 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -22,16 +22,6 @@ static void	ft_check_access_secondborn(t_data *pipex)
 		if (check == -1)
 			ft_error("Outfile does not have permission to write", pipex, 0);
 	}
-}
-
-static void	ft_close_unused_fds(t_data *pipex)
-{
-	close(pipex->pipe_fd[0]);
-	pipex->pipe_fd[0] = -1;
-	close(pipex->pipe_fd[1]);
-	pipex->pipe_fd[1] = -1;
-	close(pipex->file_fd);
-	pipex->file_fd = -1;
 }
 
 void	ft_secondborn(t_data *pipex, char **env)

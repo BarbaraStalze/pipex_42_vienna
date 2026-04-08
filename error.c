@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 18:28:47 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/06 19:11:45 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/08 15:44:52 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -26,6 +26,7 @@ void	ft_error_message(char *message, t_data *pipex, int error_type)
 	{
 		len = ft_strlen(error_message);
 		write(2, error_message, len);
+		write(2, "\n", 1);
 	}
 	else
 		perror(error_message);

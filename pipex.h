@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 15:35:19 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/06 13:08:30 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/08 14:34:48 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PIPEX_H
@@ -54,5 +54,6 @@ void	ft_open_file(t_data *pipex);
 char	*ft_is_command_executable(t_data *pipex, char **command_array,
 			char *command, char **pure_command);
 void	ft_remove_path_from_command(char *command, char **pure_command);
+void	ft_close_unused_fds(t_data *pipex);
 
 #endif
