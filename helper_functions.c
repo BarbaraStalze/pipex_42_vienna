@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 17:21:56 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/03 18:22:55 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/10 11:38:11 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -44,4 +44,5 @@ void	ft_initialize_struct(t_data *pipex)
 	pipex->error = 0;
 	pipex->stat = -1;
 	pipex->exit_stat = 0;
+	pipex->found_file = 0;
 }

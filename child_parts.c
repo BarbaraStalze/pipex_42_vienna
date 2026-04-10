@@ -6,25 +6,30 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 12:43:08 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/08 15:42:25 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/10 12:21:08 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
-
+/*
 void	ft_remove_path_from_command(char *command, char **pure_command)
 {
 	int		len;
 	int		i;
 	char	**command_path;
 
+	printf("%s\n", command);
 	command_path = ft_split(command, '/');
+	printf("%s\n", command);
 	i = 0;
 	while (command_path[i])
+	{
+		printf("%s\n", command_path[i]);
 		i++;
+	}
 	len = ft_strlen(command_path[i - 1]);
 	*pure_command = ft_strdup(command_path[i - 1]);
 	free(command_path);
-}
+}*/
 
 static char	*ft_is_command_executable_2(t_data *pipex, char **command_array,
 	char *command)
@@ -44,6 +49,7 @@ static char	*ft_is_command_executable_2(t_data *pipex, char **command_array,
 			{
 				ft_free_array(command_array);
 				pipex->exit_stat = 126;
+				free(executable);
 				ft_error("Command file has no execute permission", pipex, 0);
 			}
 		}
@@ -54,14 +60,15 @@ static char	*ft_is_command_executable_2(t_data *pipex, char **command_array,
 }
 
 char	*ft_is_command_executable(t_data *pipex, char **command_array,
-	char *command, char **pure_command)
+	char *command)
 {
 	char	*executable;
 
-	if (access(command, F_OK) == 0 && access(command, X_OK) == 0)
+	if (access(command, F_OK) == 0 && ft_strchr(command, '/'))
 	{
-		ft_remove_path_from_command(command, pure_command);
-		return (command);
+		pipex->found_file = 1; 
+		if (access(command, X_OK) == 0)
+			return (command);
 	}
 	else
 	{
@@ -70,7 +77,12 @@ char	*ft_is_command_executable(t_data *pipex, char **command_array,
 			return (executable);
 	}
 	ft_free_array(command_array);
-	pipex->exit_stat = 127;
+	if (pipex->found_file)
+	{
+		pipex->exit_stat = 127;
+		ft_error("Command file has no execute permission", pipex, 0);
+	}
+	pipex->exit_stat = 126;
 	ft_error("Command file not found", pipex, 0);
 	return (0);
 }

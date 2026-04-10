@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 15:35:19 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/08 14:34:48 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/10 12:19:57 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PIPEX_H
@@ -39,6 +39,7 @@ typedef struct s_data
 	int		child_nbr;
 	int		stat;
 	int		exit_stat;
+	int		found_file;
 }	t_data;
 
 void	ft_free_array(char **a);
@@ -52,8 +53,8 @@ void	ft_parent(t_data *pipex);
 void	ft_initialize_struct(t_data *pipex);
 void	ft_open_file(t_data *pipex);
 char	*ft_is_command_executable(t_data *pipex, char **command_array,
-			char *command, char **pure_command);
-void	ft_remove_path_from_command(char *command, char **pure_command);
+			char *command);
+//void	ft_remove_path_from_command(char *command, char **pure_command);
 void	ft_close_unused_fds(t_data *pipex);
 
 #endif
