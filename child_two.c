@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 12:46:11 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/11 16:28:09 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/11 18:22:25 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -53,5 +53,6 @@ void	ft_secondborn(t_data *pipex, char **env)
 	ft_close_unused_fds(pipex);
 	execve(pipex->cmd_path, command_array, env);
 	ft_free_child(pipex, command_array);
-	ft_error("execve failed in secondborn", pipex, 1);
+	pipex->exit_stat = 0;
+	ft_end_program(pipex);
 }

@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 16:58:38 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/11 16:51:03 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/11 18:20:25 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -28,7 +28,6 @@ void	ft_parent(t_data *pipex)
 		ft_error("Wait for secondborn failed", pipex, 1);
 	if (WIFEXITED(pipex->stat))
 		ft_end_program(pipex);
-	pipex->exit_stat = 0;
 	ft_error("Second child couldn't finish its job", pipex, 0);
 }
 

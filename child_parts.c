@@ -6,23 +6,27 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 12:43:08 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/11 15:31:10 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/11 18:30:34 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
 
 void	ft_close_unused_fds(t_data *pipex)
 {
-	close(pipex->pipe_fd[0]);
+	if (pipex->pipe_fd0_open)
+		close(pipex->pipe_fd[0]);
 	pipex->pipe_fd[0] = -1;
 	pipex->pipe_fd0_open = 0;
-	close(pipex->pipe_fd[1]);
+	if (pipex->pipe_fd1_open)
+		close(pipex->pipe_fd[1]);
 	pipex->pipe_fd[1] = -1;
 	pipex->pipe_fd1_open = 0;
-	close(pipex->infile_fd);
+	if (pipex->infile_fd_open)
+		close(pipex->infile_fd);
 	pipex->infile_fd = -1;
 	pipex->infile_fd_open = 0;
-	close(pipex->outfile_fd);
+	if (pipex->outfile_fd_open)
+		close(pipex->outfile_fd);
 	pipex->outfile_fd = -1;
 	pipex->outfile_fd_open = 0;
 }
