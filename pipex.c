@@ -11,6 +11,15 @@
 /* ************************************************************************** */
 #include "pipex.h"
 
+static void	ft_infile(t_data *pipex)
+{
+	pipex->infile_fd = open(pipex->infile, O_RDONLY);
+	if (pipex->infile_fd == -1)
+		ft_error_message("Open infile failed", pipex, 1);
+	else
+		pipex->infile_fd_open = 1;
+}
+
 static void	ft_parsing(int argc, char **argv, t_data *pipex)
 {
 	if (argc != 5)
@@ -29,6 +38,7 @@ int	main(int argc, char **argv, char **env)
 
 	ft_initialize_struct(&pipex);
 	ft_parsing(argc, argv, &pipex);
+	ft_infile(&pipex);
 	ft_pathfinder(env, &pipex);
 	ft_pipenfork(&pipex, env);
 	ft_parent(&pipex);

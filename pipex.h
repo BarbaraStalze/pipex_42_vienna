@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 15:35:19 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/10 12:19:57 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/11 15:10:44 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PIPEX_H
@@ -23,12 +23,14 @@
 typedef struct s_data
 {
 	char	*infile;
-	int		file_fd;
-	int		file_fd_open;	
+	int		infile_fd;
+	int		infile_fd_open;
+	int		outfile_fd;
+	int		outfile_fd_open;
 	char	*cmd1;
-	char	*cmd_path1;
+	char	*cmd_path;
+	int		cmd_path_mallocated;
 	char	*cmd2;
-	char	*cmd_path2;
 	char	*outfile;
 	int		pipe_fd[2];
 	int		pipe_fd0_open;
@@ -36,7 +38,6 @@ typedef struct s_data
 	pid_t	pid[2];
 	char	**paths;
 	int		error;
-	int		child_nbr;
 	int		stat;
 	int		exit_stat;
 	int		found_file;
@@ -51,10 +52,9 @@ void	ft_firstborn(t_data *pipex, char **env);
 void	ft_secondborn(t_data *pipex, char **env);
 void	ft_parent(t_data *pipex);
 void	ft_initialize_struct(t_data *pipex);
-void	ft_open_file(t_data *pipex);
-char	*ft_is_command_executable(t_data *pipex, char **command_array,
-			char *command);
-//void	ft_remove_path_from_command(char *command, char **pure_command);
+void	ft_is_command_executable(t_data *pipex, char **command_array);
 void	ft_close_unused_fds(t_data *pipex);
+void	ft_error_message(char *message, t_data *pipex, int error_type);
+void	ft_free_child(t_data *pipex, char **command_array);
 
 #endif

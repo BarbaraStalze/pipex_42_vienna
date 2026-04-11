@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 12:00:33 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/10 12:10:26 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/11 15:31:40 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -97,7 +97,6 @@ char	**ft_split(char const *s, char c)
 	char	**array;
 
 	array = ft_substring(s, c);
-	//free((void *)s);
 	return (array);
 }
 

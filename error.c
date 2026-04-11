@@ -6,10 +6,17 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 18:28:47 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/08 15:44:52 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/11 16:51:07 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
+
+void	ft_free_child(t_data *pipex, char **command_array)
+{
+	if (pipex->cmd_path_mallocated)
+		free(pipex->cmd_path);
+	ft_free_array(command_array);
+}
 
 void	ft_error_message(char *message, t_data *pipex, int error_type)
 {
@@ -41,9 +48,11 @@ void	ft_end_program(t_data *pipex)
 		close(pipex->pipe_fd[0]);
 	if (pipex->pipe_fd1_open)
 		close(pipex->pipe_fd[1]);
-	if (pipex->file_fd_open)
-		close(pipex->file_fd);
-	if (pipex->exit_stat)
+	if (pipex->infile_fd_open)
+		close(pipex->infile_fd);
+	if (pipex->outfile_fd_open)
+		close(pipex->outfile_fd);
+	if (pipex->exit_stat != -1)
 		exit(pipex->exit_stat);
 	if (WIFEXITED(pipex->stat))
 		exit(WEXITSTATUS(pipex->stat));
