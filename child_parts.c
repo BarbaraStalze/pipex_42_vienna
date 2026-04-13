@@ -31,42 +31,44 @@ void	ft_close_unused_fds(t_data *pipex)
 	pipex->outfile_fd_open = 0;
 }
 
-static void	ft_command_file_exists(t_data *pipex, char **command_array,
-		char *path_name)
+static int	ft_command_file_exists(t_data *pipex, char *path_name, int *flag)
 {
+	*flag = 1;
 	if (access(path_name, X_OK) == 0)
 	{
 		pipex->cmd_path = path_name;
 		pipex->cmd_path_mallocated = 1;
-		return ;
+		return (1);
 	}
 	else
-	{
-		free(path_name);
-		ft_free_child(pipex, command_array);
-		pipex->exit_stat = 126;
-		ft_error("Command file has no execute permission", pipex, 0);
-	}
+		return (0);
 }
 
 static void	ft_concactenate(t_data *pipex, char **command_array)
 {
 	int		i;
+	int		found_flag;
 	char	*path_name;
 
+	found_flag = 0;
 	i = 0;
 	while (pipex->paths[i])
 	{
 		path_name = ft_strjoin(pipex->paths[i], command_array[0]);
 		if (access(path_name, F_OK) == 0)
 		{
-			ft_command_file_exists(pipex, command_array, path_name);
-			return ;
+			if (ft_command_file_exists(pipex, path_name, &found_flag))
+				return ;
 		}
 		free(path_name);
 		i++;
 	}
 	ft_free_child(pipex, command_array);
+	if (found_flag)
+	{
+		pipex->exit_stat = 126;
+		ft_error("Command file has no execute permission", pipex, 0);
+	}
 	pipex->exit_stat = 127;
 	ft_error("Command file not found", pipex, 0);
 }

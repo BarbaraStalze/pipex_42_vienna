@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:25:23 by bastalze          #+#    #+#             */
-/*   Updated: 2026/04/11 15:21:06 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/04/13 13:56:49 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "pipex.h"
@@ -16,6 +16,8 @@ void	ft_firstborn(t_data *pipex, char **env)
 	int		check;
 	char	**command_array;
 
+	if (pipex->infile_fd_open == 0)
+		ft_end_program(pipex);
 	command_array = ft_split(pipex->cmd1, ' ');
 	if (!command_array)
 		ft_error("Split in firstborn has failed", pipex, 1);
